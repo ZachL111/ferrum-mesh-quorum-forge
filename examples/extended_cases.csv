@@ -1,0 +1,7 @@
+name,demand,capacity,latency,risk,weight,score,decision,reason
+baseline,66,83,18,13,6,77,review,distributed systems baseline scenario exercises the review path for bounded failure handling
+pressure,76,68,29,22,8,-12,review,distributed systems pressure scenario exercises the review path for bounded failure handling
+surge,101,92,22,16,13,136,review,distributed systems surge scenario exercises the review path for bounded failure handling
+degraded,65,55,31,27,5,-91,review,distributed systems degraded scenario exercises the review path for bounded failure handling
+recovery,90,105,21,14,11,139,review,distributed systems recovery scenario exercises the review path for bounded failure handling
+boundary,70,79,23,15,8,53,review,distributed systems boundary scenario exercises the review path for bounded failure handling
