@@ -1,0 +1,17 @@
+{
+  "repo": "ferrum-mesh-quorum-forge",
+  "thresholds": {
+    "signal": 3,
+    "slack": 2,
+    "confidence": 2,
+    "drag": 5,
+    "ship": 151,
+    "watch": 120
+  },
+  "terms": [
+    "quorum health",
+    "lease drift",
+    "replica lag",
+    "membership churn"
+  ]
+}
