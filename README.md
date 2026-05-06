@@ -1,44 +1,29 @@
 # ferrum-mesh-quorum-forge
 
-`ferrum-mesh-quorum-forge` is a SQL project for Distributed systems. It turns implement an SQL distributed systems project for quorum incremental indexing, using append-only fixtures and checkpoint recovery checks into a small local model with readable fixtures and a direct verification command.
+`ferrum-mesh-quorum-forge` is a compact SQL repository for distributed systems, centered on this goal: Implement an SQL distributed systems project for quorum incremental indexing, using append-only fixtures and checkpoint recovery checks.
 
-## Reading Ferrum Mesh Quorum Forge
+## Why It Exists
 
-Start with the README, then open `metadata/project.json` to check the constants behind the examples. After that, `fixtures/cases.csv` shows the compact path and `examples/extended_cases.csv` gives a wider look at the same rule.
+This is intentionally local and self-contained so it can be inspected without credentials, services, or seeded history.
 
-## Design Sketch
+## Ferrum Mesh Quorum Forge Review Notes
 
-The project is organized around a compact model rather than a large framework. Inputs are scored, classified, and checked against golden fixtures. The constants live in code and are mirrored in metadata so documentation drift is easy to catch. The SQL project uses sqlite fixtures, views, and assertions to keep query behavior inspectable.
+The first comparison I would make is `membership churn` against `quorum health` because it shows where the rule is most opinionated.
 
-## Purpose
+## Features
 
-The goal is to capture the core behavior in code and make the surrounding assumptions obvious. A reader should be able to run the verifier, open the fixtures, and understand why each decision was made.
+- `fixtures/domain_review.csv` adds cases for quorum health and lease drift.
+- `metadata/domain-review.json` records the same cases in structured form.
+- `config/review-profile.json` captures the read order and the two review questions.
+- `examples/ferrum-mesh-quorum-walkthrough.md` walks through the case spread.
+- The SQL code includes a review path for `membership churn` and `quorum health`.
+- `docs/field-notes.md` explains the strongest and weakest cases.
 
-## What It Does
+## Architecture Notes
 
-- Uses fixture data to keep quorum behavior changes visible in code review.
-- Includes extended examples for lease timing, including `recovery` and `degraded`.
-- Documents message ordering tradeoffs in `docs/operations.md`.
-- Runs locally with a single verification command and no external credentials.
-- Stores project constants and verification metadata in `metadata/project.json`.
+The core code exposes a scoring path and the added review layer uses `signal`, `slack`, `drag`, and `confidence`. The domain terms are `quorum health`, `lease drift`, `replica lag`, and `membership churn`.
 
-## Fixture Notes
-
-`examples/extended_cases.csv` adds six named cases. I kept the names plain so failures are easy to read in a terminal: baseline, pressure, surge, degraded, recovery, and boundary.
-
-## Files Worth Reading
-
-- `tests`: verification harness
-- `fixtures`: compact golden scenarios
-- `examples`: expanded scenario set
-- `metadata`: project constants and verification metadata
-- `docs`: operations and extension notes
-- `scripts`: local verification and audit commands
-- `schema.sql`: sqlite schema and view definitions
-
-## Setup
-
-The only required setup is the local SQL toolchain. After cloning, stay in the repo root so fixture paths resolve correctly.
+The SQL checks add a separate view over the domain review fixture.
 
 ## Usage
 
@@ -46,23 +31,10 @@ The only required setup is the local SQL toolchain. After cloning, stay in the r
 powershell -NoProfile -ExecutionPolicy Bypass -File scripts/verify.ps1
 ```
 
-This runs the language-level build or test path against the compact fixture set.
+## Tests
 
-## Verification
+That command is also the regression path. It verifies the domain cases and catches mismatches between the CSV, metadata, and code.
 
-```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File scripts/audit.ps1
-```
+## Limitations And Roadmap
 
-The audit command checks repository structure and README constraints before it delegates to the verifier.
-
-## Limits
-
-The scoring model is simple by design. More domain-specific behavior should be added through explicit adapters or extra fixture classes rather than hidden constants.
-
-## Next Directions
-
-- Add a short report command that prints the score breakdown for a single scenario.
-- Add malformed input fixtures so the failure path is as visible as the happy path.
-- Split the scoring constants into a typed configuration object and validate it before use.
-- Add one more distributed systems fixture that focuses on a malformed or borderline input.
+This remains a local project with deterministic fixtures. It does not depend on credentials, hosted services, or live data. Future work should add richer malformed inputs before widening the public API.

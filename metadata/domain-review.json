@@ -1,0 +1,73 @@
+{
+  "repo": "ferrum-mesh-quorum-forge",
+  "language": "SQL",
+  "category": "Distributed systems",
+  "goal": "Implement an SQL distributed systems project for quorum incremental indexing, using append-only fixtures and checkpoint recovery checks.",
+  "review_model": {
+    "terms": [
+      "quorum health",
+      "lease drift",
+      "replica lag",
+      "membership churn"
+    ],
+    "lanes": [
+      "ship",
+      "watch",
+      "hold"
+    ],
+    "score": "signal * 2 + slack + confidence - drag * 3",
+    "purpose": "surface the domain-specific cases that need the most careful review"
+  },
+  "cases": [
+    {
+      "name": "baseline",
+      "focus": "quorum health",
+      "signal": 44,
+      "slack": 21,
+      "drag": 14,
+      "confidence": 72,
+      "score": 139,
+      "lane": "watch"
+    },
+    {
+      "name": "stress",
+      "focus": "lease drift",
+      "signal": 48,
+      "slack": 48,
+      "drag": 12,
+      "confidence": 76,
+      "score": 184,
+      "lane": "ship"
+    },
+    {
+      "name": "edge",
+      "focus": "replica lag",
+      "signal": 67,
+      "slack": 23,
+      "drag": 15,
+      "confidence": 52,
+      "score": 164,
+      "lane": "ship"
+    },
+    {
+      "name": "recovery",
+      "focus": "membership churn",
+      "signal": 87,
+      "slack": 46,
+      "drag": 14,
+      "confidence": 46,
+      "score": 224,
+      "lane": "ship"
+    },
+    {
+      "name": "stale",
+      "focus": "quorum health",
+      "signal": 61,
+      "slack": 52,
+      "drag": 31,
+      "confidence": 57,
+      "score": 138,
+      "lane": "watch"
+    }
+  ]
+}
